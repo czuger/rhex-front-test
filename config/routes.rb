@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'map#show'
 
+  get 'get_hex_value/:x/:y' => 'map#get_hex_value'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
