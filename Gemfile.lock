@@ -1,3 +1,8 @@
+PATH
+  remote: ../rhex/
+  specs:
+    rhex (1.2.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -92,7 +97,6 @@ GEM
     rake (10.4.2)
     rdoc (4.2.1)
       json (~> 1.4)
-    rhex (1.2.2)
     rmagick (2.15.4)
     ruby_parser (3.7.2)
       sexp_processor (~> 4.1)
@@ -138,7 +142,7 @@ DEPENDENCIES
   jquery-rails
   jquery-turbolinks
   rails (= 4.1.7)
-  rhex
+  rhex!
   rmagick
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)

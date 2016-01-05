@@ -1,3 +1,14 @@
+# class Hex::Grid
+#
+#   def hex_at_xy(x, y)
+#     q = (x * Math.sqrt(3)/3.0 - y/3.0) / @hex_ray
+#     r = y * 2.0/3.0 / @hex_ray
+#     hex = Hex::Axial.new(q, r).round
+#     cget( hex.q, hex.r )
+#   end
+#
+# end
+
 class MapController < ApplicationController
 
   @@g = nil
@@ -13,7 +24,7 @@ class MapController < ApplicationController
 
     set_grid
 
-    @hex_value = @@g.hex_at_xy( x, y ).val
+    @hex = @@g.hex_at_xy( x, y )
 
     render layout: false
   end
