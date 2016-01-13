@@ -1,35 +1,43 @@
-# class Hex::Grid
-#
-#   def hex_at_xy(x, y)
-#     q = (x * Math.sqrt(3)/3.0 - y/3.0) / @hex_ray
-#     r = y * 2.0/3.0 / @hex_ray
-#     hex = Hex::Axial.new(q, r).round
-#     cget( hex.q, hex.r )
-#   end
-#
-# end
-
 class MapController < ApplicationController
 
   @@g = nil
+
+  MOVEMENT_COSTS = { m: 4, f: 2, w: Float::INFINITY, h: 2, g: 1, r: 2 }
 
   def show
     set_grid
   end
 
-  def get_hex_value
+  def compute_movement
+    set_at_xy
+    unless session[ :movement_started ]
+      session[ :movement_started ] = true
+      session[ :start_hex ] = [ @hex.q, @hex.r ]
+    else
+      session[ :movement_started ] = false
+      puts session[ :movement_started ].inspect
+      second_hex = Hex::Axial.new( session[ :start_hex ][ 0 ], session[ :start_hex ][ 1 ] )
+      movements = @@g.compute_movement( second_hex, @hex, MOVEMENT_COSTS )
+      movements_xy = movements.map{ |m| @@g.to_xy( m ) }
+    end
+    render json: movements_xy
+  end
 
+  def get_hex_value
+    set_at_xy
+    render layout: false
+  end
+
+  private
+
+  def set_at_xy
     x = params[ :x ].to_i
     y = params[ :y ].to_i
 
     set_grid
 
     @hex = @@g.hex_at_xy( x, y )
-
-    render layout: false
   end
-
-  private
 
   def set_grid
     unless @@g
