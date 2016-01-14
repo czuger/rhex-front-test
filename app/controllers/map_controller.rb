@@ -20,10 +20,10 @@ class MapController < ApplicationController
     start_hex = @@g.hex_at_xy( start_x, start_y )
     end_hex = @@g.hex_at_xy( end_x, end_y )
 
-    movements = @@g.compute_movement( start_hex, end_hex, MOVEMENT_COSTS )
+    movements, costs = @@g.compute_movement( start_hex, end_hex, MOVEMENT_COSTS )
     movements_xy = movements.map{ |m| @@g.to_xy( m ) }
 
-    render json: movements_xy
+    render json: { movements_xy: movements_xy, costs: costs }
   end
 
   def get_hex_value
