@@ -6,20 +6,23 @@ class MapController < ApplicationController
 
   def show
     set_grid
+    @grid = @@g
   end
 
   def compute_movement
-    set_at_xy
-    unless session[ :movement_started ]
-      session[ :movement_started ] = true
-      session[ :start_hex ] = [ @hex.q, @hex.r ]
-    else
-      session[ :movement_started ] = false
-      puts session[ :movement_started ].inspect
-      second_hex = Hex::Axial.new( session[ :start_hex ][ 0 ], session[ :start_hex ][ 1 ] )
-      movements = @@g.compute_movement( second_hex, @hex, MOVEMENT_COSTS )
-      movements_xy = movements.map{ |m| @@g.to_xy( m ) }
-    end
+
+    start_x = params[ :start_x ].to_i
+    start_y = params[ :start_y ].to_i
+
+    end_x = params[ :end_x ].to_i
+    end_y = params[ :end_y ].to_i
+
+    start_hex = @@g.hex_at_xy( start_x, start_y )
+    end_hex = @@g.hex_at_xy( end_x, end_y )
+
+    movements = @@g.compute_movement( start_hex, end_hex, MOVEMENT_COSTS )
+    movements_xy = movements.map{ |m| @@g.to_xy( m ) }
+
     render json: movements_xy
   end
 

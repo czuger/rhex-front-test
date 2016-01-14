@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root 'map#show'
 
   get 'get_hex_value/:x/:y' => 'map#get_hex_value'
-  get 'compute_movement/:x/:y' => 'map#compute_movement'
+  get 'compute_movement/:start_x/:start_y/:end_x/:end_y' => 'map#compute_movement'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

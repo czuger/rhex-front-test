@@ -1,7 +1,12 @@
-#map
-
-  = image_tag 'test2.png'
+#outsideWrapper
+  #insideWrapper
+    = image_tag 'test2.png', id: 'coveredImage'
+    %canvas{ id: 'coveringCanvas' }
 
 #pos
 
 #ground
+
+
+= hidden_field_tag :half_width, @grid.half_width
+= hidden_field_tag :quarter_height, @grid.quarter_height
